@@ -1,0 +1,21 @@
+<div class="actionMenu">
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= link_to @item.negate_label, "#{@item.id}/negate" if safe{@item.deletable? && @item.id && params[:action] =~ /show/ && @admin_is} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+<%= link_to 'ダウンロード', "#{@item.id}/download?content=1" if safe{@item.editable? && @item.id && params[:action] =~ /show/} %>
+</div>
+
+
+<% if false %>
+<%
+  _admin_is = Core.user.has_priv?(:manager)
+%><div class="actionMenu">
+<%= action_menu :new if _admin_is %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable? && _admin_is} %>
+<%= action_menu :destroy if safe{@item.deletable? && _admin_is} %>
+</div>
+<% end %>

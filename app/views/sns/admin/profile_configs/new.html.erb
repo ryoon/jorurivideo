@@ -1,0 +1,29 @@
+<table id="snsContainer">
+<tr>
+<td id="snsMenu">
+<div id="snsMenuContainer">
+<div class="leftMenu">
+
+
+  <%= render :partial => "sns/admin/base/editing_menu", :locals => {:current => @edit_current }%>
+
+
+
+</div>
+<%#= render :partial => "folder" %>
+</div>
+</td>
+<td id="snsContent">
+<div class="menu">
+  <div class="leftMenu">
+    <%= form_for :item, :url => {:action => :create} do |f| %>
+
+    <%= f.error_messages %>
+    <%= render :partial => "forms", :locals => {:f => f, :current=>@edit_current} %>
+    <%= raw submit(:register) %>
+  <% end %>
+  </div>
+</div>
+</td>
+</tr>
+</table>

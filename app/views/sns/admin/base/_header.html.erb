@@ -1,0 +1,30 @@
+<%
+cls = lambda do |name|
+  _cls  = [ name.to_s ]
+  _cls << 'current' if name == current
+  _cls.join(' ')
+end
+profile_edit_path = sns_profile_photos_path
+#profile_edit_path = edit_sns_profile_path(id)
+%><div class="menu">
+  <div class="leftMenu">
+    <%= link_to "ホーム", "/_admin", :class => cls.call(:front) %>
+    <%= link_to "プロフィール", profile_edit_path, :class => cls.call(:profile) %>
+    <%= link_to "仕事仲間検索", '#', :class => cls.call(:member) %>
+    <%= link_to "メールお知らせ設定", '#', :class => cls.call(:setting) %>
+    <%#= link_to Application.config(:setting, "設定"), '#', :class => cls.call(:setting) %>
+  </div>
+  <!--
+  <script type="text/javascript">
+  new Navigation({
+  'fontSize': {'fontNormal': '1.0em', 'fontLarge': '1.3em', 'fontExtraLarge': '1.5em'}
+  });
+  </script>
+  <div class="rightMenu">
+    文字サイズ
+    <a href="#void" id="fontNormal" name="fontNormal" title="小">小</a
+    ><a href="#void" id="fontLarge" name="fontLarge" title="中">中</a
+    ><a href="#void" id="fontExtraLarge" name="fontExtraLarge" title="大">大</a>
+  </div>
+  -->
+</div>

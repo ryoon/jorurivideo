@@ -1,0 +1,40 @@
+
+<%
+  _current_count = 1
+  for item in @items
+    if (_leftover_num = _current_count % @cols_count) == 1
+%>
+ <% unless _current_count == 1  %><!-- end .row --></div><% end %>
+    <div class="row">
+      <div class="clip">
+        <div class="body">
+          <div class="thumbnail">
+            <a href="<%= url_for(:action => :show, :id => item) %>" >
+              <img src="<%= url_for(:id => item, :action => :download, :thumb => 'pc_list') %>"
+                style="<%= item.reduced_thumb_size(:width => 130, :height => 73, :css => true) %>" /></a>
+          </div>
+          <div class="link"><span class="videoTitle" title="<%= h(item.title) %>"><%= link_to h(item.display_title), url_for(:action => :show, :id => item) %></span></div>
+          <div class="count">再生回数：<%=h item.access_count(@view_count_mode) %></div>
+        <!-- end .body --></div>
+      <!-- end .clip --></div>
+  <% else %>
+      <div class="<%= (_leftover_num = _current_count % @cols_count) == 0 ? 'clipEnd' : 'clip' %>">
+        <div class="body">
+          <div class="thumbnail">
+            <a href="<%= url_for(:action => :show, :id => item) %>" >
+              <img src="<%= url_for(:id => item, :action => :download, :thumb => 'pc_list') %>"
+                style="<%= item.reduced_thumb_size(:width => 130, :height => 73, :css => true) %>" /></a>
+          </div>
+          <div class="link"><span class="videoTitle" title="<%= h(item.title) %>"><%= link_to h(item.display_title), url_for(:action => :show, :id => item) %></span></div>
+          <div class="count">再生回数：<%=h item.access_count(@view_count_mode) %></div>
+        <!-- end .body --></div>
+      <!-- end .clip --></div>
+  <% end
+     _current_count += 1
+  %>
+<% end %>
+<% unless _current_count == 1  %><!-- end .row --></div><% end %>
+
+<%= paginate @items %>
+
+<div class="quota"></div>

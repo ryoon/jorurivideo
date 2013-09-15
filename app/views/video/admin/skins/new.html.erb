@@ -1,0 +1,23 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<%= video_category_view :current => video_clips_path %>
+
+</div>
+</td><td id="videoContent">
+
+<div id="adminContent">
+<%= render :partial => 'menu' %>
+<%= form_for :item, :url => {:action => :create}, :html => {:multipart => true} do |f| %>
+
+<%= f.error_messages %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<%= raw submit(:register) %>
+
+<% end %>
+
+</div>
+
+<!-- end #videoContainer --></td></table>

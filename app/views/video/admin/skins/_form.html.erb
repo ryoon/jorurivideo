@@ -1,0 +1,37 @@
+<%
+
+chFile = "$(item_name).value = $(item_file).value.replace(/\\\\/g, '/').replace(/.*\\//, '');"
+chFile += "$(item_title).value = $(item_file).value.replace(/\\\\/g, '/').replace(/.*\\//, '');"
+
+%>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <% if @item.id %>
+  <tr>
+    <th style=""><%=@item.locale(:name) %></th>
+    <td><%=h @item.name %></td>
+  </tr>
+
+  <% else %>
+  <tr>
+    <th><%= @item.locale(:file) %><span class="note">※</span></th>
+    <td><%= f.file_field :file, :size => 64, :style => 'width: 450px;', :onchange => chFile %></td>
+  </tr>
+  <tr>
+    <th style=""><%=@item.locale(:name) %><span class="note">※</span></th>
+    <td><%= f.text_field :name, :class => 'nameEn' %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th style=""><%=@item.locale(:title) %><span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr>
+  <tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>

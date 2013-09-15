@@ -1,0 +1,30 @@
+ja:
+  activerecord:
+    attributes:
+      video/category:
+        state: "状態"
+        sort_no: "並び順"
+        name: "分類ID"
+        title: "分類名"
+        created_at: "hogehoge"
+      video/skin:
+        state: "状態"
+        sort_no: "並び順"
+        name: "スキンID"
+        title: "スキン名"
+        file: "ファイル"
+        created_at: "hogehoge"
+      video/clip:
+        state: "公開範囲"
+        convert_state: "変換状況"
+        name: "ファイル名"
+        title: "タイトル"
+        body: "説明"
+        created_at: "hogehoge"
+        file: "動画ファイル"
+        thumbnail_point: "サムネイル用シーン（n秒目）"
+        category_ids: "分類"
+        skin_id: "カスタムスキン"
+        editting_state: "管理区分"
+        editting_group_ids: "管理所属"
+        category_ids: "分類"

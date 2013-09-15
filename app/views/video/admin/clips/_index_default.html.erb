@@ -1,0 +1,77 @@
+<% if false %>
+<div class="menu">
+<!--
+  <div class="leftMenu">
+    <a href="#" onclick="return move_mails();" class="move" title="移動">移動</a
+    ><a href="#" onclick="return copy_mails();" class="copy" title="コピー">コピー</a
+    ><a href="#" onclick="return delete_mails();" class="delete" title="削除">削除</a>
+    <a href="#" onclick="return seen_mails();" class="seen" title="既読にする">既読にする</a
+    ><a href="#" onclick="return unseen_mails();" class="unseen" title="未読にする">未読にする</a>
+    <a href="#" onclick="return toggleSearchForm();" class="search" title="検索">検索</a>
+  </div>
+-->
+  <div class="simplePagination">
+    <%= link_to "≪前", url_for(@s_params.merge(:page => @items.previous_page)) if @items.previous_page
+    %><span><b><%= @items.current_page %></b>/<b><%= @items.total_pages %></b></span
+    ><%= link_to "次≫", url_for(@s_params.merge(:page => @items.next_page)) if @items.next_page
+    %><%#= paginate @items, :page_links => false, :previous_label => "≪前", :next_label => "次≫" %>
+  </div>
+</div>
+<% end %>
+
+<%= form_for :item, :url => '', :html => {:id => "clips", :name => "clips"} do |f| %>
+<input type="hidden" name="page" value="<%=h params[:page] %>" />
+
+<table class="clips">
+  <tr>
+    <th class="thumb"></th>
+    <th class="main"></th>
+    <th class="detail"></th>
+  </tr>
+<script type="text/javascript" src="/_common/js/dump.js"></script>
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td class="thumb" style="text-align: center;">
+        <div class="thumbnail">
+        <a href="<%= url_for(:action => :show, :id => item) %>" >
+        <img src="<%= url_for(:id => item, :action => :download, :thumb => 'pc_list') %>"
+        style="<%= item.reduced_thumb_size(:width => 130, :height => 73, :css => true) %>" /></a>
+        </div>
+    </td>
+    <td class="main">
+      <table class="detail">
+        <tr>
+          <td><span class="videoTitle" title="<%= h(item.title) %>"><%= link_to h(item.display_title), url_for(:action => :show, :id => item) %></span></td>
+        </tr>
+        <tr>
+          <td><span class="videoInfo"><%=h item.display_body %></span></td>
+        </tr>
+        <tr>
+          <td>再生回数:<%=h item.access_count(@view_count_mode) %>／再生時間:<%= item.display_duration %></td>
+        </tr>
+      </table>
+    </td>
+    <td class="detail">
+      <table class="detail">
+        <tr>
+          <td><%=h safe{item.updated_at.strftime("%Y-%m-%d %H:%M")} %></td>
+        </tr>
+        <tr>
+          <td><%=h safe{item.private? ? item.creator.group.name  : item.creator_group.name} %></td>
+        </tr>
+        <tr>
+          <td><%=h item.shared? ? '-' : safe{item.creator.name} %></td>
+        </tr>
+        <tr>
+          <td><%= item.display_frame_size %><%= "(#{item.eng_unit})" if item.size %></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<% end %>
+
+<%= paginate @items %>
+
+<div class="quota"></div>

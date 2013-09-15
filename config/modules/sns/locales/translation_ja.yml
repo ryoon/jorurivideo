@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    attributes:
+      sns/profile_photo:
+        upload: "アップロード画像"
+#      gw/webmail:
+#      gw/webmail_mailbox:
+#        title: "フォルダ名"

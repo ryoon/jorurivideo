@@ -1,0 +1,33 @@
+<%
+
+#opt = @item.config_options
+#value_form = opt ? f.select(:value, opt, :include_blank => true) : f.text_field(:value, :style => "width: 400px;")
+
+
+value_form = ''
+if params[:id] == 'maximum_frame_size'
+  _value = @item.value
+  _value.to_s =~ /^(\d*?)x(\d*?)$/
+  _v_width  = $1
+  _v_height = $2
+
+  value_form = f.hidden_field :value
+  value_form += text_field_tag(:item_frame_size_value_w, _v_width , :name => "item[frame_size_w_value]", :style => "width: 100px;")
+  value_form += ' x '
+  value_form += text_field_tag(:item_frame_size_value_h, _v_height , :name => "item[frame_size_h_value]", :style => "width: 100px;")
+else
+  opt = @item.config_options
+  value_form = opt ? f.select(:value, opt, :include_blank => true) : f.text_field(:value, :style => "width: 400px;")
+end
+
+%><%= f.hidden_field :user_id %>
+
+<table class="show">
+  <tr>
+    <th>設定名</th>
+    <td><%=h @item.config_name %></td>
+  </tr><tr>
+    <th>設定値</th>
+    <td><%= value_form %></td>
+  </tr>
+</table>

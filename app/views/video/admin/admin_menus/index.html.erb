@@ -1,0 +1,32 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<%= video_category_view :current => video_clips_path %>
+
+</div>
+</td><td id="videoContent">
+
+<div id="adminContent">
+<%= render :partial => 'menu' %>
+
+<table class="index">
+  <tr>
+    <th style="width: 150px;">管理者メニュー</th>
+  </tr>
+
+  <tr class="cycle">
+    <td><%= link_to '分類登録', video_categories_path  %></td>
+  </tr><tr class="cycle">
+    <td><%= link_to 'スキン登録', video_skins_path  %></td>
+  </tr><tr class="cycle">
+    <td><%= link_to 'メッセージ登録', video_messages_path  %></td>
+  </tr><tr class="cycle">
+    <td><%= link_to '詳細設定', video_admin_settings_path  %></td>
+  </tr>
+
+</table>
+
+
+</div>
+
+<!-- end #videoContainer --></td></table>

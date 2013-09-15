@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<title>FitFlash - Example With Max Size Not Centered - Smart Flash Resize Script</title>
+		<!-- SWFObject embed by Geoff Stearns geoff@deconcept.com http://blog.deconcept.com/swfobject/ -->
+		<script type="text/javascript" src="swfobject.js"></script>
+		<!-- FitFlash by Miller Medeiros fitflash@millermedeiros.com - http://fitflash.millermedeiros.com/ -->
+		<script type="text/javascript" src="fitflash.js"></script>
+		<style type="text/css">
+			body{
+				background-color: #29abe2;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="holder">
+			You need <a href="http://www.adobe.com/go/getflashplayer">Flash Player 8</a> and allow javascript to see the content of this site..<br /><br />
+			If you have Flash 8 (or higher) and your browser support javascript <a href="example.html?detectflash=false">bypass the Flash detect</a>..
+		</div>
+		<script type="text/javascript">
+			<!--
+			var so = new SWFObject("example.swf", "my_flash", "550", "400", "8", "#ffffff");
+			so.write("holder");
+			FitFlash('my_flash',550,400,900,600,false);
+			//-->
+		</script>
+	</body>
+</html>

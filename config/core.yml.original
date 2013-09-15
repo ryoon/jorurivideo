@@ -1,0 +1,30 @@
+# 
+# JoruriVideo 運用設定定義ファイル
+# 
+# title : アプリケーションタイトル
+# uri : 運用URL
+# proxy : 
+# map_key : 
+# mail_domain : 
+#
+
+development:
+  title  : Joruri Video
+  uri    : http://192.168.0.2/
+  proxy  : 
+  map_key : 
+  mail_domain : 
+
+test:
+  title  : Joruri Video
+  uri    : http://192.168.0.2/
+  proxy  : 
+  map_key : 
+  mail_domain : 
+
+production:
+  title  : Joruri Video
+  uri    : http://192.168.0.2/
+  proxy  : 
+  map_key :  
+  mail_domain : 

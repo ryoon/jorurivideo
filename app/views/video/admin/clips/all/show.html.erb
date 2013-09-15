@@ -1,0 +1,133 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<div class="menu">
+
+</div>
+
+<%= render :partial => 'category' %>
+
+</div>
+</td><td id="videoContent">
+
+<div id="clipContent">
+<%= render :partial => 'menu' %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%=h safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:editting_state) %></th>
+    <td><%=h safe{@item.editting_status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:convert_state) %></th>
+    <td><%= raw display_convert_status(@item) %></td>
+  </tr>
+  <%= video_creator_view @item %>
+  <tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=h @item.title %></td>
+  </tr><tr>
+      <th style=""><%=@item.locale(:name) %></th>
+      <td><%=h @item.name %></td>
+    </tr><tr>
+    <th><%= @item.locale(:thumbnail_point) %></th>
+    <td><%=h @item.thumbnail_point %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%=hbr @item.body %></td>
+  </tr><tr>
+    <th><%= @item.locale(:category_ids) %></th>
+    <td><%= @item.category_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr><tr>
+    <th><%= @item.locale(:skin_id) %></th>
+    <td><%= safe{@item.skin.title} %></td>
+  </tr>
+</table>
+
+<br />
+<table class="show">
+  <tr>
+    <th>プレビュー</th>
+  </tr><tr>
+    <td>
+      <%= raw @item.embed_tag( {:preview => true} ) %>
+    </td>
+  </tr><tr>
+    <th>埋め込みURL <%= video_help_link(:clip_public_url_help) %></th>
+  </tr><tr>
+    <td>
+<script type="text/javascript">
+//<![CDATA[
+  function chagePublicUrl(obj,changeObjId) {
+    Element.toggle($(changeObjId));
+  }
+
+  var public_url    = '<%= raw @item.to_public_player_uri %>'
+  var logo          = true;
+  var original_size = false;
+
+  function changeLogoState(obj) {
+    logo = obj.checked;
+    setPublicUrl();
+  }
+
+  function changeOrgState(obj) {
+    original_size = obj.checked;
+    setPublicUrl();
+  }
+
+  function setPublicUrl() {
+    var params = '';
+
+    if (!logo) {
+      params = params + 'logo=n';
+    }
+    if (original_size) {
+      if (params != '') {
+        params = params + '&';
+      }
+      params = params + 'org=t';
+    }
+    if (params != '') {
+      params = '?' + params;
+    }
+    document.getElementById('item_to_public_player_uri').innerText = public_url + params;
+    return;
+  }
+//]]>
+</script>
+<table class="playerUri">
+ <tr>
+   <td>
+      <div id="inlinePlayerUri" class="inlineForm">
+      <%= form_for :item, :html => {:name => 'form0', :id => 'form0'} do |f| %>
+        <%= text_area_tag 'item_to_public_player_uri', @item.to_public_player_uri, :class => 'name', :style => 'width: 500px;overflow: hidden;', :wrap => 'off', :rows => 1, :onclick => 'document.form0.item_to_public_player_uri.focus();document.form0.item_to_public_player_uri.select();' %>
+      <% end %>
+      </div>
+   </td>
+   <td>
+     <label><input class="public_url_switch" type="checkbox" checked="checked" onclick="changeLogoState(this);" >ロゴ表示</label>
+     <label><input class="public_url_switch" type="checkbox" onclick="changeOrgState(this);" >オリジナルサイズ</label>
+   </td>
+ </tr>
+</table>
+
+    </td>
+  </tr><tr>
+    <th>埋め込みタグ（詳細）</th>
+  </tr><tr>
+    <td>
+      <div id="inlinEmbedTag" class="inlineForm">
+      <%= form_for :item, :html => {:name => 'form2', :id => 'form2'} do |f| %>
+      <%= text_area_tag 'item_embed_tag', @item.embed_tag({:file_type => 'xml'}), :class => 'name', :style => 'width: 100%', :onclick => 'document.form2.item_embed_tag.focus();document.form2.item_embed_tag.select();' %>
+      <% end %>
+      </div>
+    </td>
+  </tr>
+</table>
+</div>
+
+
+<!-- end #videoContainer --></td></tr></table>

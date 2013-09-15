@@ -1,0 +1,14 @@
+<div class="titleLine"><%=@item.name%></div>
+<%=hidden_field_tag "cl", current%>
+<% if current == "addr" %>
+  <%= render :partial => "form_addr" , :locals => {:f => f}%>
+<% elsif current == "skill" %>
+  <%= render :partial => "form_skill", :locals => {:f => f}%>
+<% elsif current == "interest" %>
+  <%= render :partial => "form_interest" , :locals => {:f => f}%>
+<% elsif current == "pr" %>
+  <%= render :partial => "form_pr" , :locals => {:f => f}%>
+<%else%>
+  <%= render :partial => "form_base" , :locals => {:f => f}%>
+<%end%>
+

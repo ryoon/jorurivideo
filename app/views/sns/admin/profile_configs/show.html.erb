@@ -1,0 +1,32 @@
+<%
+from_class = ''
+
+%>
+<table id="snsContainer">
+<tr>
+<td id="snsMenu">
+<div id="snsMenuContainer">
+<div class="leftMenu">
+  <%= render :partial => "sns/admin/base/editing_menu", :locals => {:current => @edit_current }%>
+</div>
+<%#= render :partial => "folder" %>
+</div>
+</td>
+
+<td id="snsContent">
+
+<div class="bread_crumbs">
+<%#= render :partial => "bread_crumbs", :locals => {:folder=>@folder, :current=>'current'} %>
+</div>
+
+<div class="menu">
+  <%= render :partial => "editing_box", :current=>@edit_current %>
+  <%#= link_to "テーブルの作成", url_for(:action=>:new, :folder_id=> @folder.id), :class =>'newTable', :title => "テーブルの作成"%>
+</div>
+</td>
+
+
+
+
+</tr>
+</table>

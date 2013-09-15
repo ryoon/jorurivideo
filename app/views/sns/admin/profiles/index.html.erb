@@ -1,0 +1,85 @@
+<%
+from_class = ''
+
+%>
+<table id="snsContainer">
+</tr>
+<td id="snsMenu">
+<div id="snsMenuContainer">
+<div class="profileContainer">
+  <div class="profilePhoto">
+    <%=image_tag(@profile.profile_photo_path, :alt => @profile.name, :align => 'center', :border => 0)%>
+  </div>
+  <span><%=@profile.name%></span>
+  <div class="profileMessage">内線1234です！</div>
+  <%= link_to "プロフィール編集", sns_profile_photos_path %>
+  <ul class="myMenu">
+    <li><%= link_to "ニュースフィード", '#' %></li>
+    <li><%= link_to "仕事仲間", '#' %></li>
+    <li><%= link_to "マイノート", '#' %></li>
+    <li><%= link_to "マイ動画", '#' %></li>
+    <li><%= link_to "マイファイル", '#' %></li>
+  </ul>
+  </div>
+<div class="projectMenu">
+  <ul>
+    <li><%= link_to "まちアソビ推進会議", '#' %></li>
+    <li><%= link_to "□□□□", '#' %></li>
+    <li><%= link_to "□□□□□", '#' %></li>
+    <li><%= link_to "マイスケジュール", '#' %></li>
+  </ul>
+<hr />
+  <ul>
+    <li><%= link_to "プロジェクト", '#' %></li>
+    <ul>
+      <li><%= link_to "参加メンバー", '#' %></li>
+      <li><%= link_to "会議室", '#' %></li>
+      <li><%= link_to "スケジュール", '#' %></li>
+    </ul>
+    <li><%= link_to "ノート", '#' %></li>
+    <li><%= link_to "フォト", '#' %></li>
+    <li><%= link_to "動画", '#' %></li>
+    <li><%= link_to "ファイル", '#' %></li>
+  </ul>
+<hr />
+<ul>
+    <li><%= link_to "メモ", '#' %></li>
+</ul>
+</div>
+<%#= render :partial => "folder" %>
+</div>
+</td>
+
+<td id="snsContent">
+
+<div class="bread_crumbs">
+<%#= render :partial => "bread_crumbs", :locals => {:folder=>@folder, :current=>'current'} %>
+</div>
+
+<div class="menu">
+  <div class="mainTitle">ニュースフィード</div>
+  <div class="leftMenu">
+  <%#= link_to "テーブルの作成", url_for(:action=>:new, :folder_id=> @folder.id), :class =>'newTable', :title => "テーブルの作成"%>
+  <%= render :partial => "news_feed", :locals=>{:feeds => @feeds}%>
+  </div>
+</div>
+</td>
+
+
+<td id="snsLink">
+<div id="snsLinkContainer">
+<div class="menu">
+  <div class="resentMember">
+    <div class="resentMemberTitle">オンライン中の仕事仲間</div>
+    <div class="resentMemberContainer">
+    </div>
+  </div>
+  <%#= link_to "フォルダの登録", url_for(:action => :new, :controller=>:folders, :folder_id=> @folder.id ), :class => 'newMailbox', :title => "フォルダの登録" %>
+</div>
+<%#= render :partial => "folder" %>
+</div>
+</td>
+
+
+</tr>
+</table>

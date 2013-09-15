@@ -1,0 +1,31 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<%= video_category_view :current => video_clips_path %>
+
+</div>
+</td><td id="videoContent">
+
+<div id="adminContent">
+<%= render :partial => 'menu' %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%=h safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=h @item.title %></td>
+  </tr>
+  <%# = layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%=h @item.sort_no %></td>
+  </tr>
+</table>
+
+<%# = creator_view @item %>
+
+</div>
+
+<!-- end #videoContainer --></td></table>

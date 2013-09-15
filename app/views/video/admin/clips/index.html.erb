@@ -1,0 +1,28 @@
+<%= javascript_include_tag "/_common/js/mail_form.js" %>
+
+<table id="videoContainer">
+  <tr>
+    <td id="videoMenu">
+      <div id="videoMenuContainer">
+        <div class="menu"><%# link_to 'メールの受信', '#', :class => 'index', :title => "メールの受信" %></div>
+        <%= render :partial => 'category' %>
+      </div>
+    </td>
+    <td id="videoContent">
+      <%= render :partial => 'menu' %>
+        <% case @ranking_state
+           when 'weekly_ranking'  %>
+             <%= render :partial => 'search' %>
+             <%= render :partial => 'index_weekly_ranking' %>
+        <% when 'monthly_ranking'  %>
+             <%= render :partial => 'search' %>
+             <%= render :partial => 'index_monthly_ranking' %>
+        <% when 'total_ranking'  %>
+             <%= render :partial => 'index_total_ranking' %>
+        <% when 'overall'  %>
+             <%= render :partial => 'index_ranking' %>
+        <% else %>
+             <%= render :partial => 'search' %>
+             <%= render :partial => 'index_default' %>
+        <% end %>
+<!-- end #videoContainer --></td></tr></table>

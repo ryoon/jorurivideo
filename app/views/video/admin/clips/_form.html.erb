@@ -1,0 +1,322 @@
+<%
+
+ _thumb_form_style = (@item.is_sound?) ? 'display: none;' : '';
+_file_size_limit  = @admin_is ? '0' : "#{@upper_limit_file_size.value} MB"
+#_file_size_limit  = @admin_is ? '0' : "10000 MB"
+_thumbnail_preview = @item.id ? "プレビュー" : "サムネイル プレビュー";
+
+%>
+<script type="text/javascript" src="/_common/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/_common/js/swfupload/plugins/swfupload.queue.js"></script>
+<script type="text/javascript" src="/_common/js/swfupload/plugins/fileprogress.js"></script>
+<script type="text/javascript" src="/_common/js/swfupload/plugins/handlers.js"></script>
+<script type="text/javascript" src="/_common/js/dump.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+// onload event
+var swfu = null;
+var param_authenticity_token = "<%= form_authenticity_token %>";
+var param_total_size_limit   = "<%= @upper_limit_file_size.value %> MB";
+var thumbnail_preview = "<%= _thumbnail_preview %>"
+
+window.onload = function() {
+  <% unless @item.id %>
+    initSwfupload();
+    loadUploadedFiles();
+  <% end %>
+  switchGuide();
+}
+// file uploader
+function initSwfupload() {
+  swfu = new SWFUpload({
+    upload_url : "<%= video_posting_files_path %>",
+    post_params: {
+      authenticity_token : "<%= form_authenticity_token %>",
+      tmp_id : "<%= @item.tmp_id %>",
+      total_size_limit : "<%= _file_size_limit %>",
+      thumbnail_point : "1"
+    },
+    flash_url : "/_common/js/swfupload/swfupload.swf",
+    file_post_name : "file",
+    file_size_limit : "<%= _file_size_limit %>",
+    file_types : "*.*",
+    file_types_description : "All Files",
+    file_upload_limit : 1,
+    file_queue_limit : 1,
+    custom_settings : {
+      progressTarget : "fsUploadProgress",
+      cancelButtonId : "btnCancel"
+    },
+    debug: false,
+    prevent_swf_caching : false,
+    button_image_url: "/_common/themes/admin/gw/images/bt/bt_f_newfile.png",
+    button_width: "99",
+    button_height: "24",
+    button_placeholder_id: "spanButtonPlaceHolder",//"uploadHtml",
+    file_queued_handler : fileQueued,
+    //file_queue_error_handler : fileQueueError,
+    file_queue_error_handler: function(file, errorCode, message){
+      switch (errorCode) {
+      case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setError();
+        progress.toggleCancel(false);
+        progress.setStatus("容量制限を超えています。＜<%= _file_size_limit %>＞");
+        break;
+      default:
+        fileQueueError(file, errorCode, message)
+        break;
+      }
+    },
+    file_dialog_complete_handler : fileDialogComplete,
+    //upload_start_handler : uploadStart,
+    upload_start_handler: function(file){
+      var _thumbnail_point = document.getElementById("item_thumbnail_point").value;
+      if (!_thumbnail_point) {
+        _thumbnail_point = '1';
+      }
+      swfu.setPostParams({
+        authenticity_token : param_authenticity_token,
+        tmp_id : document.getElementById("item_tmp_id").value,
+        total_size_limit : param_total_size_limit,
+        thumbnail_point : _thumbnail_point
+      });
+    },
+    upload_progress_handler : uploadProgress,
+    upload_error_handler : uploadError,
+    //upload_success_handler : uploadSuccess,
+    upload_success_handler : function(file, data) {
+      var progress = new FileProgress(file, this.customSettings.progressTarget);
+      progress.setComplete();
+      progress.setStatus("Complete.");
+      progress.toggleCancel(false);
+      if (data.match(/^Error/i) != null) {
+        alert(data);
+        clearStats();
+      } else {
+        var id = '', name = '', size = '', image_is = '', pre_file_url = '', alert_msg = '';
+        //if (data.match(/^OK ([0-9]+) (.+) (.+?) (.?) (.+?)$/)) {
+        if (data.match(/^(OK|Alert) ([0-9]+) (.+) (.+?) (.?) (.+?) (([\n\r]|.)*)$/m)) {
+          id = RegExp.$2;
+          name = RegExp.$3;
+          size = RegExp.$4;
+          image_is = RegExp.$5;
+          pre_file_url = RegExp.$6;
+          if (RegExp.$1 == 'Alert') {
+            alert_msg = RegExp.$7;
+          }
+        }
+        document.getElementById("item_file_id").value = id;
+        document.getElementById("preThumbnail").innerHTML = '<img src="' + pre_file_url + '?id=' + id  + '&thumb=true" />';
+        document.getElementById("thumbnailState").value   = 'ready';
+
+        if (image_is == '1') {
+          document.getElementById("thumbForm").style.display = '';
+        } else {
+          document.getElementById("thumbForm").style.display = 'none';
+        }
+        addUploadedFile(id, name, size, image_is);
+        if (alert_msg != '') {
+          alert(alert_msg);
+        }
+      }
+    },
+    upload_complete_handler : uploadComplete,
+    queue_complete_handler : queueComplete  // Queue plugin event
+  });
+}
+function getNodeValue(node, name) {
+  var elem = node.getElementsByTagName(name);
+  if (elem && elem[0] && elem[0].firstChild) {
+    return elem[0].firstChild.nodeValue;
+  }
+  return "";
+}
+// load uploaded files
+function loadUploadedFiles() {
+  var uri = "<%= video_posting_files_path(:format => 'xml') %>";
+  var myAjax = new Ajax.Request(uri, {
+    method: 'get',
+    parameters: "tmp_id=<%= @item.tmp_id %>",
+    onSuccess: showUploadedFiles,
+    onFailure: function(request) { alert('送信に失敗しました。'); }
+  });
+}
+function showUploadedFiles(request) {
+  var html  = "";
+  var items = request.responseXML.getElementsByTagName("item");
+  if (items.length > 0) {
+    document.getElementById("thumbnailState").value   = 'ready';
+  }
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    var id   = getNodeValue(item, 'id');
+    var name = getNodeValue(item, 'name');
+    var size = getNodeValue(item, 'eng_unit');
+    var image_is = getNodeValue(item, 'image_is');
+    addUploadedFile(id, name, size, image_is);
+  }
+}
+function addUploadedFile(id, name, size, image_is) {
+  var field = $('uploadedFiles');
+  if (field.visible() == false) { field.show(); }
+  var sepa = ""; //(field.innerHTML == "") ? '' : '<span class="uploadedFileSeparator"></span>';
+  var icon = "iconFile icon" + name.replace(/.*\./, '').capitalize();
+  var html = '<span id="uploadedFile' + id + '" class="uploadedFile">' + sepa;
+  var uri = '<%= video_posting_files_path %>'
+    + '/' + id + '?tmp_id=<%= @item.tmp_id %>&filename=' + encodeURIComponent(name);
+  var opt = '';
+  if (image_is == '1') {
+    opt = 'target="_blank"';
+  } else {
+    opt = 'onclick="return downloadUploadedFile(this.href);"';
+  }
+  html += '<a href="' + uri +'" class="uploadedFileName '+ icon + '" ' + opt + ' >' + name.escapeHTML() + "(" + size + ")" + '</a>';
+  html += '<a href="#" class="deleteUploadedFile" onclick="return deleteUploadedFile(\'' + id + '\')" title="削除">x</a>';
+  html += '</span> ';
+  field.innerHTML += html;
+}
+function deleteUploadedFile(id) {
+  clearStats();
+
+  document.getElementById("preThumbnail").innerHTML = thumbnail_preview;
+  var elm = $('uploadedFile' + id);
+  var uri = "<%= video_posting_files_path %>/" + id + '.xml';
+  var myAjax = new Ajax.Request(uri, {
+    method: 'post',
+    parameters: "_method=delete&authenticity_token=<%= form_authenticity_token %>&tmp_id=<%= @item.tmp_id %>",
+    onComplete: deletedUploadedFile,
+    onFailure: function(request) { alert('送信に失敗しました。'); }
+  });
+  return false;
+}
+function deletedUploadedFile(request) {
+  document.getElementById("item_file_id").value = '';
+  document.getElementById("thumbnailState").value   = 'disabled';
+  var id  = request.responseText.replace(/^OK /, '');
+  var elm = $('uploadedFile' + id);
+  if (elm) { elm.remove(); }
+  var field = $('uploadedFiles');
+  field.innerHTML = field.innerHTML.replace(/> +</, '> <');
+  if (field.innerHTML.match(/^ *$/) != null) {
+    field.innerHTML = "";
+    field.hide();
+  }
+}
+function remakeThumbnail() {
+  var _ts = document.getElementById("thumbnailState").value;
+  var _thumbPoint = document.getElementById("item_thumbnail_point").value;
+
+  if (_ts == 'disabled') {
+    alert('ファイルがアプロードされていません。');
+  } else if (_ts == 'processing') {
+    alert('現在、処理中です。');
+  } else {
+    document.getElementById("thumbnailState").value   = 'processing';
+    var file_id = document.getElementById("item_file_id").value;
+    if (!file_id) {
+      file_id = 'update';
+    }
+    var uri = "<%= video_posting_files_path %>/" + file_id + '/thumbnail';
+    var params = "_method=thumbnail&authenticity_token=<%= form_authenticity_token %>&item_id=<%= @item.id %>&tmp_id=<%= @item.tmp_id %>";
+    if (!_thumbPoint) {
+      _thumbPoint = '1';
+    }
+    params = params + '&thumb_point=' + _thumbPoint;
+    var myAjax = new Ajax.Request(uri, {
+      method: 'get',
+      parameters: params,
+      onComplete: function(request) {
+          document.getElementById("thumbnailState").value   = 'ready';
+          var res = request.responseText;
+          if (res.match(/^Error/i) != null) {
+            alert(res);
+          } else {
+            var pre_file_url = request.responseText.replace(/^OK /, '');
+            document.getElementById("preThumbnail").innerHTML = '<img src="' + pre_file_url + '?id='
+              + document.getElementById("item_file_id").value  + '&thumb=pc_player&t=' + new Date().getMilliseconds() + '" />';
+          }
+        },
+      onFailure: function(request) { alert('サムネイルの作成に失敗しました。'); }
+    });
+  }
+  return false;
+}
+
+function clearStats(){
+  var st = swfu.getStats();
+  st.files_queued = 0;
+  st.successful_uploads = 0;
+  swfu.setStats(st);
+}
+
+function switchGuide(){
+  _private = document.getElementById("item_editting_state_private").checked;
+  if (_private) {
+    document.getElementById("guideSpace").innerHTML = 'マイ動画として登録します。';
+  } else {
+    document.getElementById("guideSpace").innerHTML = '所属動画として登録します。';
+  }
+}
+
+//]]>
+</script>
+<%= f.hidden_field :tmp_id %>
+<%= f.hidden_field :file_id %>
+<input type="hidden" id="thumbnailState" name="thumbnailState" value="<%= params[:action] == 'new' ? 'disabled' : 'ready' %>" />
+
+<span id="guideSpace" class="guide"></span>
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %> <%= video_help_link(:clip_state_help) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:editting_state) %> <%= video_help_link(:clip_editting_state_help) %></th>
+    <td><%= f.radio_buttons :editting_state, @item.editting_states, :class => 'status', :onclick => "switchGuide();" %><%= video_creator_form f %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %><span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr>
+
+  <% if @item.id %>
+    <tr>
+      <th style=""><%=@item.locale(:name) %></th>
+      <td><%=h @item.name %></td>
+    </tr>
+    <tr>
+      <th style="">サムネイル</th>
+      <td><div id="preThumbnail"><%=raw "<img src=\"#{url_for(:id => @item, :action => :download, :thumb => 'pc_player')}\"
+                                            >" %></div></td>
+    </tr>
+  <% else %>
+  <tr>
+    <th><%= @item.locale(:file) %><span class="note">※</span>  <%= video_help_link(:clip_file_help) %></th>
+    <td>
+      <div id="swfupButtons">
+        <span id="spanButtonPlaceHolder"></span><input id="btnCancel" type="button" value="キャンセル" onclick="swfu.cancelQueue();" disabled="disabled" />
+      </div>
+      <div id="uploadedFiles" style="display: none;"></div>
+      <div id="divStatus"></div>
+      <div id="fsUploadProgress"></div>
+      <div id="preThumbnail"><%=raw _thumbnail_preview %><%=raw "<img src=\"#{url_for(:id => @item, :action => :download, :thumb => 'pc_player')}\">" if @item.id %></div>
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <th style=""><%=@item.locale(:thumbnail_point) %><br />※小数点以下の指定可能</th>
+    <td>
+      <div id="thumbForm" style="<%= _thumb_form_style %>">
+        <%= f.text_field :thumbnail_point, :class => 'nameEn', :style => "width:100px;" %><input id="btnTumbnail" type="button" value="サムネイル再作成" onclick="remakeThumbnail();" />
+      </div>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'name', :rows => 5, :style => 'width: 100%' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:category_ids) %><span class="note">※</span></th>
+    <td><%= video_category_form f %></td>
+  </tr><tr>
+    <th><%= @item.locale(:skin_id) %></th>
+    <td><%= video_skin_form f %></td>
+  </tr>
+</table>

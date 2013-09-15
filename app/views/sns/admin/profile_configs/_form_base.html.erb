@@ -1,0 +1,21 @@
+<%
+sex_select =
+date_select_options = {:use_month_numbers => true,:date_separator => '　／　',
+  :start_year => Date.today.year,:end_year => Date.today.year - 100,:default=>@item.birthday}
+select_options = {:include_blank=>true}
+%>
+<table class="show">
+  <tr>
+  <th>性別</th>
+  <td><%=f.select :sex , @item.sex_select, select_options%></td>
+  </tr>
+  <tr>
+  <th>生年月日</th>
+  <td><%=f.date_select :birthday,date_select_options %>
+  </td>
+  </tr>
+  <tr>
+  <th>血液型</th>
+  <td><%=f.select "bloodtype",@item.bloodtype_select,select_options%></td>
+  </tr>
+</table>

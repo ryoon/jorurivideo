@@ -1,0 +1,29 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<div class="menu">
+  <%# link_to 'メールの受信', '#', :class => 'index', :title => "メールの受信" %>
+</div>
+
+<%= render :partial => 'category' %>
+
+</div>
+</td><td id="videoContent">
+
+
+<div id="clipContent">
+<%= render :partial => 'menu' %>
+
+<%= form_for :item, :url => {:action => :create}, :html => {:multipart => true} do |f| %>
+
+<%= f.error_messages %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<%= raw submit(:register) %>
+
+<% end %>
+
+</div>
+
+<!-- end #videoContainer --></td></tr></table>

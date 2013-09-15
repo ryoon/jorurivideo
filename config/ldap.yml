@@ -1,0 +1,21 @@
+# 
+# JoruriVideo LDAP連携サーバ設定定義ファイル
+# 
+# host: 連携するLDAPサーバアドレス
+# port: ポート番号
+# base: LDAP base distinguished name/検索の起点となる識別名/例)base: dc=pref,dc=tokushima,dc=jp
+# 
+development:
+  host: 192.168.0.0
+  port: 389
+  base: dc=pref,dc=tokushima,dc=jp
+
+test:
+  host: 192.168.0.0
+  port: 389
+  base: dc=pref,dc=tokushima,dc=jp
+
+production:
+  host: 192.168.0.0
+  port: 389
+  base: dc=pref,dc=tokushima,dc=jp

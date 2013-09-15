@@ -1,0 +1,29 @@
+<table id="snsContainer">
+<tr>
+<td id="snsMenu">
+<div id="snsMenuContainer">
+<div class="leftMenu">
+  <%= render :partial => "sns/admin/base/editing_menu", :locals => {:current => @edit_current }%>
+</div>
+<%#= render :partial => "folder" %>
+</div>
+</td>
+
+<td id="snsContent">
+
+<div class="bread_crumbs">
+<%#= render :partial => "bread_crumbs", :locals => {:folder=>@folder, :current=>'current'} %>
+</div>
+
+<div class="menu">
+  <div class="leftMenu">
+<% if @edit_current == "closed" %>
+  <%= render :partial => "sns/admin/profile_configs/closed_profile", :locals => {:current => @edit_current }%>
+<%else%>
+  <%= render :partial => "sns/admin/profile_configs/public_profile", :locals => {:current => @edit_current }%>
+<%end%>
+  </div>
+</div>
+</td>
+</tr>
+</table>

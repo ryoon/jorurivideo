@@ -1,0 +1,22 @@
+<% form_for :item, :html => { :multipart => true }, :url => {:controller=>"sns/admin/tests", :action => :create} do |f| %>
+<%= f.error_messages %>
+<%= f.text_area :text ,:cols=>80 , :rows=>5 %><br />
+<%= f.hidden_field :created_user_id, :value=>Core.user.id %><br />
+<%= f.submit('投稿') %>
+<%end%>
+<%unless feeds.blank?%>
+  <table class="show" style="width: 300px">
+  <%for item in feeds%>
+  <tr><td>
+    <%=hbr item.text%>
+    <%if item.created_user_id == Core.user.id%>
+     <div class="delete">
+       <%=link_to "削除",sns_test_path(item),:method=>:delete,
+  :class => :delete, :title => "削除", :confirm=>"この投稿を削除します。よろしいですか？"%>
+     </div>
+     <%end%>
+   </td></tr>
+  <%end%>
+  </table>
+<%end%>
+

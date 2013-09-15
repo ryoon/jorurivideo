@@ -1,0 +1,10 @@
+<p class="form">Gw組織変更データ</p>
+
+<%= form_for(:item, :url => {:action => :import}, :html => {:method => :post, :multipart => true}) do |f| %>
+<%= hidden_field_tag :do, 'gw_group_changes' %>
+<%# f.submit 'インポート', :style => 'width: 120px;' %><br />
+  <input type="submit" name="execute" value="インポート" style="width: 120px;"
+   onclick="return confirm('取り込みを開始してよろしいですか？');" />
+
+<% end %>
+<br />

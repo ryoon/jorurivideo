@@ -1,0 +1,82 @@
+<%= javascript_include_tag "/_common/js/mail_form.js" %>
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<div class="menu">
+
+</div>
+
+<%= render :partial => 'category' %>
+
+</div>
+</td><td id="videoContent">
+
+<%= render :partial => 'menu' %>
+
+<%= render :partial => 'search' %>
+
+<%= form_for :item, :url => '', :html => {:id => "clips", :name => "clips"} do |f| %>
+<input type="hidden" name="page" value="<%=h params[:page] %>" />
+
+<table class="clips">
+  <tr>
+    <th class="thumb"></th>
+    <th class="main"></th>
+    <th class="detail"></th>
+    <th class="limit">公開範囲</th>
+    <th class="editorKbn">管理区分</th>
+  </tr>
+<script type="text/javascript" src="/_common/js/dump.js"></script>
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td class="thumb" style="text-align: center;">
+        <div class="thumbnail">
+        <% if false %><a href="<%= url_for(:id => item, :action => :preview) %>" target="_blank" onclick="<%= open_preview(url_for(:id => item, :action => :preview)) %>" ><% end %>
+        <a href="<%= url_for(:id => item, :action => :show) %>">
+        <img src="<%= url_for(:id => item, :action => :download, :thumb => 'pc_list') %>"
+        style="<%= item.reduced_thumb_size(:width => 130, :height => 73, :css => true) %>" /></a>
+        </div>
+    </td>
+    <td class="main">
+      <table class="detail">
+        <tr>
+          <td><span class="videoTitle" title="<%= h(item.title) %>"><%= link_to h(item.display_title), url_for(:action => :show, :id => item) %></span></td>
+        </tr>
+        <tr>
+          <td><span class="videoInfo"><%=h item.display_body %></span></td>
+        </tr>
+        <tr>
+          <td>再生回数:<%=h item.access_count(@view_count_mode) %>／再生時間:<%= item.display_duration %></td>
+        </tr>
+      </table>
+    </td>
+    <td class="detail">
+      <table class="detail">
+        <tr>
+          <td><%=h safe{item.updated_at.strftime("%Y-%m-%d %H:%M")} %></td>
+        </tr>
+        <tr>
+          <td><%=h safe{item.private? ? item.creator.group.name  : item.creator_group.name} %></td>
+        </tr>
+        <tr>
+          <td><%=h safe{item.creator.name} %></td>
+        </tr>
+        <tr>
+          <td><%= item.display_frame_size %><%= "(#{item.eng_unit})" if item.size %></td>
+        </tr>
+      </table>
+    </td>
+    <td class="limit"><%=h safe{item.status.name} %><%=raw "<br />#{display_convert_status(item, {:action => 'index'})}" unless item.convert_state == 'done'  %></td>
+    <td class="editorKbn"><%=h safe{item.editting_status.name} %></td>
+  </tr>
+  <% end %>
+</table>
+
+<% end %>
+
+<%= paginate @items %>
+
+<div class="quota"></div>
+
+
+<!-- end #videoContainer --></td></tr></table>

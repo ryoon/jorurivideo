@@ -1,0 +1,37 @@
+<%
+
+kopts = [["タイトル","title"],["説明","body"]]
+sopts = [["すべて",""],["公開","public"],["所属公開","group"],["非公開","closed"]]
+nopts = [["",""],["削除動画","negated"]]
+disp  = "block"  #params[:search] ? "block" : "none"
+
+%><%= form_tag '', :method => :get, :id => "searchForm", :class => 'search',
+  :style => "display: #{disp}; margin: 0px 10px 10px 10px;" do %>
+<%= hidden_field_tag :search, 1 %>
+
+<table>
+  <tr>
+    <th>検索</th>
+    <td>
+      <%= text_field_tag 's_keyword', params[:s_keyword], :class => 'keyword' %>
+      <%= select_tag('s_column', options_for_select(kopts, params[:s_column])) %>
+    </td>
+    <th>公開範囲</th>
+    <td>
+      <%= select_tag('s_status', options_for_select(sopts, params[:s_status])) %>
+    </td>
+    <td class="formSubmitters">
+      <%= submit_tag '検索', :name => :search %><%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  <tr><tr>
+    <th>論理削除</th>
+    <td colspan="3">
+      <%= select_tag('s_negate', options_for_select(nopts, params[:s_negate])) %>
+    &nbsp;
+    職員番号&nbsp;<%= text_field_tag 's_c_code', params[:s_c_code], :class => 'keyword', :style => "width : 120px;" %>
+    &nbsp;
+    所属コード&nbsp;<%= text_field_tag 's_g_code', params[:s_g_code], :class => 'keyword', :style => "width : 120px;" %>
+    </td>
+  </tr>
+</table>
+<!-- end .search --><% end %>

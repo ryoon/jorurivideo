@@ -1,0 +1,40 @@
+<table id="videoContainer"><tr><td id="videoMenu">
+<div id="videoMenuContainer">
+
+<%= video_category_view :current => video_clips_path %>
+
+</div>
+</td><td id="videoContent">
+
+
+<div id="adminContent">
+<%= render :partial => 'menu' %>
+
+<%=raw init_tiny_mce :readonly => true %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%=h safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%=h safe{@item.published_at.strftime("%Y-%m-%d %H:%M")} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=h @item.title %></td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:body) %></th>
+  </tr><tr>
+    <td><%= text_area_tag 'body', @item.body, :class => 'mceEditor', :style => 'width:100%' %></td>
+  </tr>
+</table>
+
+</div>
+
+
+<!-- end #videoContainer --></td></table>
+

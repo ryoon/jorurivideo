@@ -1,0 +1,424 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Mail List
+========================================================= */
+
+/* tables table
+--------------------------------------------------------- */
+#videoContent table.clips {
+  width: 100%;
+}
+#videoContent table.clips tr {
+}
+#videoContent table.clips th {
+  padding: 5px 4px;
+  background-color: #ccc;
+  text-align: left;
+  *height: 8px;
+}
+#videoContent table.clips th.thumb { width: 132px; text-align: center; }
+#videoContent table.clips th.main { }
+#videoContent table.clips th.detail { width: 15em; }
+#videoContent table.clips th.limit   { width: 60px; text-align: center; }
+#videoContent table.clips th.editorKbn { width: 60px; text-align: center; }
+
+
+#videoContent table.clips th.check   { width: 30px; padding: 0px; border: none; text-align: center; }
+#videoContent table.clips th.star    { width: 20px; text-align: center; }
+#videoContent table.clips th.attach  { width: 20px; padding: 0px 2px; text-align: center; }
+#videoContent table.clips th.subject { }
+#videoContent table.clips th.from    { width: 30%; }
+#videoContent table.clips th.fromOmitAddress { width: 20%; }
+#videoContent table.clips th.date    { width: 9em; }
+#videoContent table.clips th.size    { width: 4.5em; text-align: right; }
+#videoContent table.clips th.attach {
+  background-image: url(../images/mailoption/clip.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  text-indent: -9999px;
+}
+#videoContent table.clips th.from .caption ,
+#videoContent table.clips th.fromOmitAddress .caption {
+  float: left;
+}
+#videoContent table.clips th.from a.cancelFromSearch ,
+#videoContent table.clips th.fromOmitAddress a.cancelFromSearch {
+  float: right;
+  color: #00B;
+  text-decoration: none;
+}
+
+#videoContent table.clips td {
+  height: 6.6em;
+  padding: 0px 0px 0px 4px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  word-break: break-all;
+  line-height: 1.6;
+}
+#videoContent table.clips td.limit   { text-align: center; }
+#videoContent table.clips td.editorKbn { text-align: center; }
+
+
+#videoContent table.clips td.category {
+  height: 1.6em;
+  padding: 0px 0px 0px 4px;
+  border-bottom: 1px solid #ddd;
+  background-color: #cef;
+  word-break: break-all;
+  line-height: 1.6;
+}
+#videoContent table.clips td.autoWrap {
+  height: auto;
+}
+#videoContent table.clips td span.overflowHidden {
+  display: block;
+  overflow: hidden;
+  height: 1.6em;
+}
+#videoContent table.clips td span.autoWrap {
+  height: 100%;
+}
+#videoContent table.clips tr.unseen td {
+  background-color: #ffb;
+}
+#videoContent table.clips tr.unseen td.subject {
+  font-weight: bold;
+}
+#videoContent table.clips td.check   { padding: 0px; text-align: center; }
+#videoContent table.clips td.star    { color: #f70; text-align: center; }
+#videoContent table.clips td.attach {
+  color: #0b0;
+  text-align: center;
+}
+#videoContent table.clips td.attach {
+  padding: 0px 2px;
+}
+#videoContent table.clips td.attach span.attach {
+  display: inline-block;
+  width: 12px;
+  height: 0;
+  padding-top: 12px;
+  background-image: url(../images/mailoption/clip.gif);
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+#videoContent table.clips th.star,
+#videoContent table.clips td.star {
+  background-image: url(../images/mailoption/star_off.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+#videoContent table.clips th.star {
+  text-indent: -9999px;
+}
+#videoContent table.clips td.star span.start {
+  display: inline-block;
+  height: 0;
+  padding-top: 11px;
+  background-image: url(../images/mailoption/star_on.gif);
+  background-repeat: no-repeat;
+  background-position: center 0;
+  overflow: hidden;
+}
+#videoContent table.clips td.subject {
+  cursor: pointer;
+}
+#videoContent table.clips td.from {
+  padding-right: 5px;
+  cursor: pointer;
+}
+#videoContent table.clips td.date {
+  cursor: pointer;
+}
+
+#videoContent table.clips td.status {
+  text-align: center;
+}
+#videoContent table.clips td.size {
+  padding-right: 3px;
+  text-align: right;
+  cursor: pointer;
+}
+#videoContent table.clips tr,
+#videoContent table.clips td,
+#videoContent table.clips table.detail td {
+  *height: 1%;
+}
+#videoContent table.clips td.thumb {
+  width: 136px;
+}
+#videoContent table.clips td.main {
+  padding-right: 10px;
+}
+#videoContent table.clips td.detail {
+  width: 196px;
+  width: 15%;
+}
+#videoContent table.clips td.detail table.detail {
+
+}
+#videoContent table.clips table.detail td.item {
+  width: 60px;
+}
+#videoContent table.clips tr:hover td {
+  _height: 1%;
+  background-color: #ffb;
+}
+#videoContent table.clips .thumbnail {
+  width: 130px;
+  height: 73px;
+  background-color: #000;
+}
+#videoContent table.clips .thumbnail img {
+  vertical-align: bottom;
+}
+#videoContent table.clips td a {
+  display: inline-block;
+  /* color: #000; */
+  text-decoration: none;
+}
+#videoContent table.clips td a:hover {
+  color: #00f;
+}
+#videoContent table.clips tr td.subject a {
+  padding-left: 15px;
+  background-image: url(../images/mailoption/mail-open.gif);
+  background-repeat: no-repeat;
+  background-position: 0 0.35em;
+}
+#videoContent table.clips tr td.answered a {
+  background-image: url(../images/mailoption/finish_forward.gif);
+  background-repeat: no-repeat;
+}
+#videoContent table.clips tr td.forwarded a {
+  background-image: url(../images/mailoption/finish_reply.gif);
+  background-repeat: no-repeat;
+}
+#videoContent table.clips tr td.answeredforwarded a {
+  background-image: url(../images/mailoption/replytransmit.gif);
+  background-repeat: no-repeat;
+}
+#videoContent table.clips tr.unseen td.subject a {
+  background-image: url(../images/mailoption/mail-notopen.gif);
+  background-position: 0 0.5em;
+}
+#videoContent table.clips tr.unseen td.mdnRequest a {
+  background-image: url(../images/mailoption/mdn_request.gif);
+  background-position: 0 0.2em;
+}
+#videoContent table.detail td {
+  height: 1em;
+  padding: 0px 0px 0px 4px;
+  border-bottom: 0px solid #ddd;
+  background-color: #fff;
+  word-break: break-all;
+  /* line-height: 1.6; */
+}
+#videoContent table.detail td span.videoTitle {
+  font-weight: bold;
+  display: block;
+  overflow: hidden;
+  height: 1.6em;
+  font-size: 120%;
+}
+#videoContent table.detail td span.videoInfo {
+  display: block;
+  overflow: hidden;
+  height: 3.2em;
+}
+
+#videoContent .quota {
+  margin-top: 15px;
+  color: #070;
+  font-weight: bold;
+  text-align: center;
+}
+#videoContent .quotaAlert {
+  margin: 10px 0;
+  color: #f00;
+  font-weight: bold;
+  text-align: center;
+}
+#btnTumbnail {
+  display: inline-block;
+  width: 110px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  background-image: url(../images/bt/bg-link_check.jpg);
+  background-repeat: no-repeat;
+  font-size: 12px;
+  text-align: center;
+  line-height: 22px;
+  height: 24px;
+}
+
+/* file upload / swfupload
+--------------------------- */
+#uploadedFiles {
+  width: 90%;
+  margin: 3px 0px 3px 0px;
+  padding: 3px 4px;
+  border: 1px solid #bbb;
+  background-color: #fff;
+  line-height: 1.5;
+}
+#uploadedFiles .uploadedFile {
+  display: block;
+  margin: 0px 8px 0px 0px;
+  white-space: nowrap;
+}
+#uploadedFiles .uploadedFile * {
+  display: inline-block;
+  vertical-align: middle;
+}
+#uploadedFiles .uploadedFileName {
+  padding-left: 27px;
+  padding-right: 0px !important;
+  color: #000;
+  text-decoration: none;
+}
+#uploadedFiles .uploadedFileSeparator {
+}
+#uploadedFiles a.deleteUploadedFile {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0px 0px 0px 3px;
+  background-image: url(./images/bt/bt_cancelbutton.gif);
+  background-repeat: no-repeat;
+  background-position: -14px 0px;
+  font-size: 0;
+}
+#uploadedFiles a.deleteUploadedFile:hover {
+  background-position: 0px 0px;
+}
+
+#swfupButtons {
+  margin-top: 1px;
+}
+#swfupButtons * {
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+#btnCancel {
+  display: inline-block;
+  width: 80px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  background-image: url(../images/bt/bg-link_check.jpg);
+  background-repeat: no-repeat;
+  font-size: 12px;
+  text-align: center;
+  line-height: 22px;
+  height: 24px;
+}
+#divStatus {
+  display: none;
+  padding: 4px 0px 0px 6px;
+  color: #080;
+}
+#fsUploadProgress {
+}
+.progressContainer {
+  width: 400px;
+  margin: 4px 0px 2px 0px;
+  padding: 3px 6px;
+  border: 1px solid #bbb;
+  background-color: #eee;
+}
+.progressContainer .progressName {
+  color: #000;
+}
+.progressContainer .progressBarStatus {
+  color: #922;
+  white-space: nowrap;
+}
+.progressContainer .progressBarInProgress,
+.progressContainer .progressBarComplete,
+.progressContainer .progressBarError {
+  font-size: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #48d;
+  margin-top: 2px;
+}
+.progressContainer .progressBarComplete {
+  width: 100%;
+  background-color: green;
+  display: none;
+}
+.progressContainer .progressBarError {
+  width: 100%;
+  background-color: red;
+  display: none;
+}
+.progressContainer a.progressCancel {
+  font-size: 0;
+  display: block;
+  height: 14px;
+  width: 14px;
+  background-image: url(../images/bt/bt_cancelbutton.gif);
+  background-repeat: no-repeat;
+  background-position: -14px 0px;
+  float: right;
+}
+.progressContainer a.progressCancel:hover {
+  background-position: 0px 0px;
+}
+
+/* video
+----------------------------------------*/
+table.innerBox {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+table.innerBox th {
+  border: 1px solid #ddd;
+  padding: 7px 10px;
+  background-color: #eee;
+}
+table.innerBox th.playerArea {
+  text-align: center;
+}
+table.innerBox td {
+  border: 1px solid #ddd;
+  padding: 7px 10px;
+}
+table.innerBox table th,
+table.innerBox table td {
+  border: none;
+  padding: 0;
+}
+table.superintend {
+  float: left;
+}
+table.superintend th span {
+  text-align: right;
+}
+table.innerBox table.superintend td {
+  padding-left: 3px;
+}
+table.release {
+  float: right;
+  margin-right: 5px;
+}
+table.innerBox table.release td {
+  padding-left: 3px;
+}
+table.innerBox table.videoTitle {
+  width: 100%;
+  border: 1px solid #aab1e6;
+}
+table.innerBox table.videoTitle th {
+  padding: 8px 10px;
+  background-color: #ffffe9;
+  font-size: 140%;
+  font-weight: bold;
+}
+table.videoPlayer {
+  display: inline-block;
+  margin: 10px 0;
+}
+

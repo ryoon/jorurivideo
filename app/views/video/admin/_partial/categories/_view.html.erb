@@ -1,0 +1,43 @@
+<%
+
+  _current_uri = options[:current] || ''
+
+%><div class="category">
+<h3 class="iconSideRank">最近よく見られている動画</h3>
+<ul>
+  <li><%= link_to "週間（#{format_date_string(@a_week_ago, :skip_year => true)}～#{format_date_string(@yesterday, :skip_year => true)}）", "#{_current_uri}?rank=weekly" %></li>
+  <li><%= link_to "月間（#{format_date_string(@a_month_ago, :skip_year => true)}～#{format_date_string(@yesterday, :skip_year => true)}）", "#{_current_uri}?rank=monthly" %></li>
+  <% if false %><li><%= link_to "累計", "#{_current_uri}?rank=total" %></li><% end %>
+</ul>
+<br />
+
+<h3 class="iconSideMonth">月別</h3>
+<ul>
+  <li><%= link_to "指定なし", "#{_current_uri}" %></li>
+  <% for grp in @months %>
+    <li><%= link_to "#{h(safe{grp.published_year})}年#{h(safe{grp.published_month})}月 (#{safe{grp.cnt}})", "#{_current_uri}?year=#{grp.published_year}&month=#{grp.published_month}" %></li>
+  <% end %>
+</ul>
+<br />
+
+<h3 class="iconSideCategory">分類</h3>
+<ul>
+  <li><%= link_to "指定なし", "#{_current_uri}" %></li>
+  <% for cate in @categories %>
+    <li><%= link_to"#{h(safe{cate[:title]})} (#{safe{cate[:count]}})" , "#{_current_uri}?cate=#{cate[:id]}" %></li>
+  <% end %>
+<% if false %>
+  <% for cate in @categories %>
+    <li><%= link_to"#{h(safe{cate.main_category.title})} (#{safe{cate.cnt}})" , "#{_current_uri}?cate=#{cate.main_category.id}" %></li>
+  <% end %>
+<% end %>
+</ul>
+<br />
+<h3 class="iconSideGroup">所属</h3>
+<ul>
+  <li><%= link_to "指定なし", "#{_current_uri}" %></li>
+  <% for grp in @groups %>
+    <li><%= link_to "#{h(safe{grp.creator_group.name})} (#{safe{grp.cnt}})", "#{_current_uri}?group=#{grp.creator_group_id}" %></li>
+  <% end %>
+</ul>
+</div>

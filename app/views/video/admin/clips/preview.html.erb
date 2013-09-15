@@ -1,0 +1,24 @@
+<div style="">
+
+<!-- player -->
+<%= raw @item.embed_tag %>
+
+<% if false %>
+<!-- player -->
+<script type="text/javascript" src="/_common/swf/jwplayer/swfobject.js"></script>
+<div id="player">player</div>
+<script type="text/javascript">
+  var so = new SWFObject('/_common/swf/jwplayer/player.swf','mpl','640','363','8');
+  so.addParam('allowscriptaccess','always');
+  so.addParam('allowfullscreen','true');
+  so.addVariable('height','363');
+  so.addVariable('width','640');
+  so.addVariable('file','<%= url_for(:action=> :download, :id=>@item.id) %>.flv');
+  so.addVariable('image','<%= url_for(:action=> :download, :id=>@item.id, :thumb => 'pc_player') %>');
+  so.addVariable('logo','/_common/themes/admin/video/images/player/logo.png');
+  so.addVariable('skin','<%= safe{@item.skin.public_uri} %>');
+  so.write('player');
+</script>
+<% end %>
+
+</div>

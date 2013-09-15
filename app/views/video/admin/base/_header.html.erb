@@ -1,0 +1,45 @@
+<%
+cls = lambda do |name|
+  _cls  = [ name.to_s ]
+  _cls << 'current' if name == current
+  _cls.join(' ')
+end
+
+_admin_is = Core.user.has_auth?(:manager)
+_editable_video_link = _admin_is ? video_all_clips_path : video_my_clips_path;
+
+
+%><div class="menu">
+  <div class="leftMenu">
+    <%= link_to "動画", "#{video_clips_path}?rank=overall", :class => cls.call(:videos) %>
+    <%= link_to "編集可能動画", _editable_video_link, :class => cls.call(:front) %>
+    <%# link_to "個人設定", video_settings_path, :class => cls.call(:settings) %>
+    <%= link_to "管理者設定", video_admin_menus_path, :class => cls.call(:admin_menus) if _admin_is %>
+  </div>
+  <div class="centerMenu">
+    <%= link_to "動画アップロード", video_upload_link({:admin_is => _admin_is} ), :class => 'videoUpload' %>
+  </div>
+  <div class="rightMenu">
+    &nbsp;
+  </div>
+
+  <!--
+  <script type="text/javascript">
+  new Navigation({
+  'fontSize': {'fontNormal': '1.0em', 'fontLarge': '1.3em', 'fontExtraLarge': '1.5em'}
+  });
+  </script>
+  <div class="rightMenu">
+    文字サイズ
+    <a href="#void" id="fontNormal" name="fontNormal" title="小">小</a
+    ><a href="#void" id="fontLarge" name="fontLarge" title="中">中</a
+    ><a href="#void" id="fontExtraLarge" name="fontExtraLarge" title="大">大</a>
+  </div>
+
+
+    <%= link_to "分類", video_categories_path, :class => cls.call(:categories) %>
+    <%= link_to "スキン", video_skins_path, :class => cls.call(:skins) %>
+    <%= link_to "メッセージ", video_messages_path, :class => cls.call(:messages) %>
+    <%= link_to "管理者設定", video_admin_settings_path, :class => cls.call(:admin_settings) %>
+  -->
+</div>

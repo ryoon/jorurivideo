@@ -1,0 +1,1 @@
+#jorurivideo_db_init.sqlをご利用ください。

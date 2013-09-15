@@ -1,0 +1,12 @@
+# ヘルプサイトの登録
+video:
+  view_count_mode: "both"
+  clip_state_help: "#"
+  clip_editting_state_help: "#"
+  clip_file_help: "#"
+  clip_public_url_help: "#"
+  maximum_frame_width: 800
+  maximum_frame_height: 600
+  default_player_width: 640
+  default_player_height: 363
+  

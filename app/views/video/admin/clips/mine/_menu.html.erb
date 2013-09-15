@@ -1,0 +1,11 @@
+<div class="actionMenu">
+<% if params[:action] == 'index' %><h2><% if @admin_is %><%= link_to '動画（管理者用）', video_all_clips_path %> | <% end %><%= link_to '所属動画', video_shared_clips_path %> | マイ動画</h2><% end %>
+
+
+<%# action_menu :new %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+<%= link_to 'ダウンロード', "#{@item.id}/download?content=1" if safe{@item.editable? && @item.id && params[:action] =~ /show/} %>
+</div>

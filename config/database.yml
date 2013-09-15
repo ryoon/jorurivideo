@@ -1,0 +1,76 @@
+# 
+# JoruriVideo データベース設定定義ファイル
+# 
+# adapter : mysql
+# database: #{Rails.env}_joruri_video
+# username: joruri
+# password: データベースのパスワード
+# timeout : 5000
+# encoding: utf8
+# host: データベースサーバのIPアドレス
+#
+
+development:
+  adapter : mysql
+  database: development_joruri_video
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1
+
+test:
+  adapter : mysql
+  database: test_joruri_video
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1
+
+production:
+  adapter : mysql
+  database: production_joruri_video
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1
+
+<%
+env_prefix = case Rails.env
+when 'production'
+  'production'
+when 'test'
+  'test'
+else
+  'development'
+end
+%>
+
+session:
+  adapter : mysql
+  database: <%= env_prefix %>_joruri_video
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1
+
+gw_core:
+  adapter : mysql
+  database: <%= env_prefix %>_jgw_core
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1
+
+gw_sub:
+  adapter : mysql
+  database: <%= env_prefix %>_jgw_gw_pref
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  host: 127.0.0.1

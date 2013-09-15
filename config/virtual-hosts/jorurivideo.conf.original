@@ -1,0 +1,22 @@
+Timeout 300
+KeepAlive Off
+MaxKeepAliveRequests 100
+KeepAliveTimeout 1
+HostnameLookups Off
+UseCanonicalName Off
+ServerTokens Full
+ServerSignature Off
+
+PassengerMaxPoolSize 40
+PassengerMaxInstancesPerApp 0
+PassengerPoolIdleTime 300
+
+SetEnvIf Request_URI "\.(gif)|(jpg)|(png)|(jpe)|(css)|(ico)|(js)$" no_log
+
+<VirtualHost *:80>
+    ServerName default
+    DocumentRoot /var/share/jorurivideo/public
+    Alias /_common/ "/var/share/jorurivideo/public/_common/"
+    setenv LANG ja_JP.UTF-8
+    RailsEnv development
+</VirtualHost>
